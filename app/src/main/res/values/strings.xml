@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ILoveZappos</string>
+    <string name="search_val">Search</string>
+    <string name="search_hint">Enter product name</string>
+    <string name="intro">Press the Search icon on the top right to begin searching for a product.</string>
+</resources>
