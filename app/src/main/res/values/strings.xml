@@ -8,6 +8,8 @@
     <string name="more_info">More information</string>
     <string name="color_id">Color ID:</string>
     <string name="style_id">Style ID:</string>
-    <string name="product_id">Product ID:</string>
+    <string name="product_id">SKU:</string>
     <string name="product_url">Product URL:</string>
+    <string name="no_match">No items match your query</string>
+    <string name="product_image">Product image</string>
 </resources>

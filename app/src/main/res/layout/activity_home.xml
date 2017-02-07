@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="product"
             type="anindya.ilovezappos.Product" />
@@ -14,11 +15,12 @@
         android:id="@+id/main_content"
         style="@style/Screen"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin">
+        android:layout_height="match_parent">
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/activity_vertical_margin">
 
 
         <LinearLayout
@@ -31,21 +33,29 @@
             tools:context="anindya.ilovezappos.Home">
 
             <TextView
-                android:id="@+id/blah"
+                android:id="@+id/message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="@style/Content"
                 android:text="@string/intro" />
+
+            <LinearLayout
+                android:id="@+id/details"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
             <ImageView
                 android:layout_width="300dp"
                 android:layout_height="300dp"
-                android:src="@{product.image}" />
+                android:layout_gravity="center"
+                android:src="@{product.image}"
+                android:contentDescription="@string/product_image" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_weight="0.69">
+                android:layout_height="140dp"
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="200dp"
@@ -68,14 +78,40 @@
 
                 </LinearLayout>
 
-                <TextView
-                    style="@style/Price"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
+                <LinearLayout
+                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
                     android:layout_gravity="end"
-                    android:layout_weight="2"
-                    android:gravity="end"
-                    android:text="@{product.originalPrice}" />
+                    android:orientation="vertical"
+                    android:gravity="end">
+
+                    <TextView
+                        style="@style/Price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{product.price}"
+                        android:layout_gravity="end"
+                        android:gravity="end"/>
+
+                    <TextView
+                        android:id="@+id/original_price"
+                        style="@style/Percent"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:gravity="end"
+                        android:text="@{product.originalPrice}"
+                        android:visibility="@{product.discount == 0? View.GONE: View.VISIBLE}"/>
+
+                    <TextView
+                        style="@style/Percent"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:gravity="end"
+                        android:text="@{product.percentOff}"
+                        android:visibility="@{product.discount == 0? View.GONE: View.VISIBLE}"/>
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -97,7 +133,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/Headings"
+                        style="@style/Content"
                         android:text="@string/product_id" />
 
                     <TextView
@@ -114,7 +150,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/Headings"
+                        style="@style/Content"
                         android:text="@string/color_id" />
 
                     <TextView
@@ -131,7 +167,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/Headings"
+                        style="@style/Content"
                         android:text="@string/style_id" />
 
                     <TextView
@@ -148,7 +184,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/Headings"
+                        style="@style/Content"
                         android:text="@string/product_url" />
 
                     <TextView
@@ -159,20 +195,23 @@
                         style="@style/Content"
                         android:text="@{product.productUrl}" />
                 </LinearLayout>
+            </LinearLayout>
 
             </LinearLayout>
 
 
         </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/addtocart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
+            android:layout_gravity="bottom|end"
             android:layout_margin="16dp"
             android:src="@drawable/addtocart"
             app:layout_anchorGravity="bottom|right|end" />
 
     </android.support.design.widget.CoordinatorLayout>
+
 
 </layout>
