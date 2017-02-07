@@ -16,7 +16,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.ScaleAnimation;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -137,27 +142,40 @@ class ImageLoader extends AsyncTask<String, Void, Bitmap> {
 public class Home extends ActionBarActivity {
     ActivityHomeBinding binding;
     FloatingActionButton fab;
+    LinearLayout info;
+    Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home);
         handleIntent(getIntent());
+        mContext = getApplicationContext();
+        setupFab();
+    }
 
+    private void setupFab() {
         fab = (FloatingActionButton) findViewById(R.id.addtocart);
-        fab.setVisibility(View.GONE);
+        fab.hide();
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shrink);
+                view.startAnimation(anim);
+                Toast.makeText(mContext, mContext.getText(R.string.added_to_cart),Toast.LENGTH_SHORT).show();
             }
         });
+
+        info = (LinearLayout) findViewById(R.id.info);
+        info.setVisibility(View.GONE);
     }
 
 
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            fab.setVisibility(View.VISIBLE);
+            fab.show();
+            info.setVisibility(View.VISIBLE);
+
             final String query = intent.getStringExtra(SearchManager.QUERY);
             ((TextView)findViewById(R.id.blah)).setText(query);
 

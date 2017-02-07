@@ -2,89 +2,168 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
         <variable
             name="product"
-            type="anindya.ilovezappos.Product"/>
+            type="anindya.ilovezappos.Product" />
     </data>
+
 
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/main_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    <LinearLayout
-        android:id="@+id/activity_home"
+        style="@style/Screen"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        tools:context="anindya.ilovezappos.Home"
-        style="@style/Screen"
-        android:orientation="vertical"
-        android:weightSum="1"
-        android:gravity="top|center_horizontal">
+        android:paddingTop="@dimen/activity_vertical_margin">
 
-        <TextView
-            android:id="@+id/blah"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/intro" />
-
-        <ImageView
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:src="@{product.image}" />
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:id="@+id/activity_home"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="top|center_horizontal"
+            android:orientation="vertical"
+            android:weightSum="1"
+            tools:context="anindya.ilovezappos.Home">
+
+            <TextView
+                android:id="@+id/blah"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/intro" />
+
+            <ImageView
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:src="@{product.image}" />
 
             <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="0.69">
+
+                <LinearLayout
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/Brand"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{product.brandName}" />
+
+                    <TextView
+                        style="@style/Product"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{product.productName}" />
+
+
+                </LinearLayout>
+
+                <TextView
+                    style="@style/Price"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_weight="2"
+                    android:gravity="end"
+                    android:text="@{product.originalPrice}" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_width="200dp"
-                android:layout_height="match_parent"
                 android:layout_gravity="start">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/Brand"
-                    android:text="@{product.brandName}"/>
+                    android:text="@string/more_info"
+                    style="@style/Info"/>
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/Product"
-                    android:text="@{product.productName}"/>
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/Headings"
+                        android:text="@string/product_id" />
+
+                    <TextView
+                        android:id="@+id/productId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Content"
+                        android:text="@{product.productId}" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/Headings"
+                        android:text="@string/color_id" />
+
+                    <TextView
+                        android:id="@+id/colorId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Content"
+                        android:text="@{product.colorId}" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/Headings"
+                        android:text="@string/style_id" />
+
+                    <TextView
+                        android:id="@+id/styleId"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/Content"
+                        android:text="@{product.styleId}" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/Headings"
+                        android:text="@string/product_url" />
+
+                    <TextView
+                        android:id="@+id/productUrl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autoLink="web"
+                        style="@style/Content"
+                        android:text="@{product.productUrl}" />
+                </LinearLayout>
+
             </LinearLayout>
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                style="@style/Price"
-                android:text="@{product.originalPrice}"
-                android:layout_weight="2"
-                android:layout_gravity="end"
-                android:gravity="end"/>
+
+
         </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/colorId"
-            android:text="@{product.colorId}"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/styleId"
-            android:text="@{product.styleId}"/>
-
-    </LinearLayout>
-
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/addtocart"
             android:layout_width="wrap_content"
@@ -95,4 +174,5 @@
             app:layout_anchorGravity="bottom|right|end" />
 
     </android.support.design.widget.CoordinatorLayout>
+
 </layout>
