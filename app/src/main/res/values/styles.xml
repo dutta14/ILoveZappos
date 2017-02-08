@@ -13,29 +13,44 @@
     </style>
 
     <style name="Brand" parent="@style/TextAppearance.AppCompat">
-        <item name="android:textSize">25sp</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
     <style name="Product" parent="@style/TextAppearance.AppCompat">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textColor">@android:color/darker_gray</item>
     </style>
 
     <style name="Price" parent="@style/TextAppearance.AppCompat">
-        <item name="android:textSize">30sp</item>
+        <item name="android:textSize">25sp</item>
         <item name="android:textColor">@android:color/holo_orange_dark</item>
     </style>
 
     <style name="Info">
-        <item name="android:textSize">24sp</item>
-    </style>
-
-    <style name="Headings">
         <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="Content">
         <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="Percent">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">#d3d3d3</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="ContentHead" parent="Content">
+        <item name="android:textStyle">bold|italic</item>
     </style>
 
 </resources>

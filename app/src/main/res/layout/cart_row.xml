@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:clickable="true"
+    android:background="?android:attr/selectableItemBackground"
+    android:weightSum="1">
+
+    <TextView
+        android:id="@+id/item_name"
+        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_gravity="start"
+        style="@style/Content"/>
+
+
+    <TextView
+        android:id="@+id/price"
+        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_gravity="end"
+        android:gravity="end|center_vertical"
+        style="@style/Content"/>
+</LinearLayout>

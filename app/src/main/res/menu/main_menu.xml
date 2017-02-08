@@ -6,4 +6,18 @@
         android:title="@string/search_val"
         app:showAsAction="always"
         app:actionViewClass="android.support.v7.widget.SearchView" />
+
+    <item
+        android:id="@+id/menu_item_share"
+        android:icon="@drawable/share"
+        app:showAsAction="always"
+        android:title="@string/share"
+        android:actionProviderClass= "android.widget.ShareActionProvider" />
+
+    <item
+        android:id="@+id/cart"
+        android:icon="@drawable/cart"
+        app:showAsAction="always"
+        android:title="@string/cart"
+        android:actionProviderClass= "android.widget.ShareActionProvider" />
 </menu>
