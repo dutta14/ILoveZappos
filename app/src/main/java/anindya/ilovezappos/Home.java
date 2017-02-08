@@ -27,7 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashSet;
+import java.util.HashMap;
 
 import anindya.ilovezappos.databinding.ActivityHomeBinding;
 
@@ -45,7 +45,8 @@ public class Home extends ActionBarActivity {
     private LinearLayout results;
     private Snackbar mSnackbar;
     private String mQuery;
-    private MenuItem share;
+    private MenuItem share, cart;
+    private Product mProduct;
 
     //public URI to share between friends.
     private final String URI = "http://anindya.ilovezappos/";
@@ -62,7 +63,7 @@ public class Home extends ActionBarActivity {
     private static final String PRODUCT_URL = "productUrl";
     private static final String PRODUCT_NAME = "productName";
 
-    HashSet<String> mQuerySet;
+    private static HashMap<String,Product> mCartItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +82,7 @@ public class Home extends ActionBarActivity {
             performSearch(getIntent());
         setupCartButton();
 
-        mQuerySet = new HashSet<>();
+        mCartItems = new HashMap<>();
     }
 
     private void setupCartButton() {
@@ -94,22 +95,31 @@ public class Home extends ActionBarActivity {
                 view.startAnimation(anim);
                 int message;
 
-                if(mQuerySet.add(mQuery)) {
+                if(!mCartItems.containsKey(mQuery)) {
                     mCart.setImageResource(R.drawable.added);
                     message = R.string.added_to_cart;
+                    mCartItems.put(mQuery,mProduct);
                 }
                 else {
-                    mQuerySet.remove(mQuery);
+                    mCartItems.remove(mQuery);
                     mCart.setImageResource(R.drawable.addtocart);
                     message = R.string.removed_from_cart;
                 }
                 Snackbar.make(layout, mContext.getText(message), Snackbar.LENGTH_SHORT).show();
 
+                if(Cart.getAdapter() != null)
+                    Cart.getAdapter().notifyDataSetChanged();
             }
         });
 
         TextView price = (TextView) findViewById(R.id.original_price);
         price.setPaintFlags(price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+    }
+
+    protected void onResume() {
+        super.onResume();
+        if(mCart != null)
+            mCart.setImageResource(mCartItems.containsKey(mQuery)?R.drawable.added:R.drawable.addtocart);
     }
 
 
@@ -148,6 +158,7 @@ public class Home extends ActionBarActivity {
                 results.setVisibility(GONE);
             } else {
                 share.setVisible(true);
+                cart.setVisible(true);
                 JSONArray resultArray = obj.getJSONArray("results");
                 JSONObject result = resultArray.getJSONObject(0);
 
@@ -155,8 +166,9 @@ public class Home extends ActionBarActivity {
                 results.setAlpha(1f);
                 noResult.setVisibility(GONE);
                 mCart.show();
+                mCart.setImageResource(mCartItems.containsKey(mQuery)?R.drawable.added:R.drawable.addtocart);
 
-                final Product p = new Product(result.getString(BRAND_NAME), null, result.getString(PRODUCT_ID),
+                mProduct = new Product(result.getString(BRAND_NAME), null, result.getString(PRODUCT_ID),
                                             result.getString(ORIGINAL_PRICE), result.getString(STYLE_ID), result.getString(COLOR_ID),
                                             result.getString(PRICE), result.getString(PERCENT_OFF),  result.getString(PRODUCT_URL), result.getString(PRODUCT_NAME));
 
@@ -164,8 +176,8 @@ public class Home extends ActionBarActivity {
 
                     @Override
                     public void processFinish(Bitmap op) {
-                        p.setImage(new BitmapDrawable(op));
-                        binding.setProduct(p);
+                        mProduct.setImage(new BitmapDrawable(op));
+                        binding.setProduct(mProduct);
                     }
                 }).execute(result.getString(IMAGE_URL));
             }
@@ -199,6 +211,9 @@ public class Home extends ActionBarActivity {
 
         share = menu.findItem(R.id.menu_item_share);
         share.setVisible(false);
+
+        cart = menu.findItem(R.id.cart);
+        cart.setVisible(false);
         return true;
     }
 
@@ -214,8 +229,17 @@ public class Home extends ActionBarActivity {
                 return true;
             case R.id.search:
                 return true;
+            case R.id.cart:
+                Intent i = new Intent();
+                i.setClass(mContext, Cart.class);
+                startActivity(i);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    static HashMap<String,Product> getMCartItems() {
+        return mCartItems;
     }
 }

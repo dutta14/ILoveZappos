@@ -13,4 +13,11 @@
         app:showAsAction="always"
         android:title="Share"
         android:actionProviderClass= "android.widget.ShareActionProvider" />
+
+    <item
+        android:id="@+id/cart"
+        android:icon="@drawable/cart"
+        app:showAsAction="always"
+        android:title="Share"
+        android:actionProviderClass= "android.widget.ShareActionProvider" />
 </menu>
