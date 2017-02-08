@@ -105,7 +105,16 @@ public class Home extends ActionBarActivity {
                     mCart.setImageResource(R.drawable.addtocart);
                     message = R.string.removed_from_cart;
                 }
-                Snackbar.make(layout, mContext.getText(message), Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(layout, mContext.getText(message), Snackbar.LENGTH_SHORT).setAction("Undo",new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(mCartItems.containsKey(mQuery))
+                            mCartItems.remove(mQuery);
+                        else
+                            mCartItems.put(mQuery, mProduct);
+                        mCart.setImageResource(mCartItems.containsKey(mQuery)?R.drawable.added:R.drawable.addtocart);
+                    }
+                }).show();
 
                 if(Cart.getAdapter() != null)
                     Cart.getAdapter().notifyDataSetChanged();
@@ -121,7 +130,6 @@ public class Home extends ActionBarActivity {
         if(mCart != null)
             mCart.setImageResource(mCartItems.containsKey(mQuery)?R.drawable.added:R.drawable.addtocart);
     }
-
 
     private void handleIntent(Intent intent) {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
@@ -156,6 +164,8 @@ public class Home extends ActionBarActivity {
                 noResult.setText(R.string.no_match);
                 noResult.setVisibility(VISIBLE);
                 results.setVisibility(GONE);
+                mCart.hide();
+                share.setVisible(false);
             } else {
                 share.setVisible(true);
                 cart.setVisible(true);

@@ -37,10 +37,21 @@ public class Cart extends ActionBarActivity {
             public void onClick(View view) {
 
                 if(productList.size()>0) {
+                   final ArrayList<Product> temp = new ArrayList<>(productList);
+                    final HashMap<String, Product> m = new HashMap<>(Home.getMCartItems());
+
+
+                    Snackbar.make(view, R.string.items_deleted, Snackbar.LENGTH_LONG).setAction("Undo", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            productList.addAll(temp);
+                            Home.getMCartItems().putAll(m);
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }).show();
                     Home.getMCartItems().clear();
                     productList.clear();
                     mAdapter.notifyDataSetChanged();
-                    Snackbar.make(view, R.string.items_deleted, Snackbar.LENGTH_LONG).show();
                 } else {
                     Snackbar.make(view, R.string.cart_empty, Snackbar.LENGTH_LONG).show();
                 }

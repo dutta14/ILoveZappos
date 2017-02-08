@@ -7,7 +7,7 @@
         <import type="android.view.View"/>
         <variable
             name="product"
-            type="anindya.ilovezappos.Product" />
+            type="anindya.ilovezappos.Product"/>
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -35,6 +35,7 @@
                     style="@style/Content"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="60dp"
                     android:text="@string/intro" />
 
                 <LinearLayout
@@ -53,7 +54,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="140dp"
+                        android:layout_height="100dp"
                         android:orientation="horizontal">
 
                         <LinearLayout
@@ -129,7 +130,7 @@
                             android:layout_height="wrap_content">
 
                             <TextView
-                                style="@style/Content"
+                                style="@style/ContentHead"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/product_id" />
@@ -147,7 +148,7 @@
                             android:layout_height="wrap_content">
 
                             <TextView
-                                style="@style/Content"
+                                style="@style/ContentHead"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/color_id" />
@@ -165,7 +166,7 @@
                             android:layout_height="wrap_content">
 
                             <TextView
-                                style="@style/Content"
+                                style="@style/ContentHead"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/style_id" />
@@ -183,7 +184,7 @@
                             android:layout_height="wrap_content">
 
                             <TextView
-                                style="@style/Content"
+                                style="@style/ContentHead"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/product_url" />

@@ -13,16 +13,16 @@
     </style>
 
     <style name="Brand" parent="@style/TextAppearance.AppCompat">
-        <item name="android:textSize">25sp</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
     <style name="Product" parent="@style/TextAppearance.AppCompat">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textColor">@android:color/darker_gray</item>
     </style>
 
     <style name="Price" parent="@style/TextAppearance.AppCompat">
-        <item name="android:textSize">30sp</item>
+        <item name="android:textSize">25sp</item>
         <item name="android:textColor">@android:color/holo_orange_dark</item>
     </style>
 
@@ -48,5 +48,9 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="ContentHead" parent="Content">
+        <item name="android:textStyle">bold|italic</item>
+    </style>
 
 </resources>
