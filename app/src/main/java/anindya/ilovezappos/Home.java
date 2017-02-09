@@ -28,6 +28,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import anindya.ilovezappos.databinding.ActivityHomeBinding;
 
@@ -63,7 +64,7 @@ public class Home extends ActionBarActivity {
     private static final String PRODUCT_URL = "productUrl";
     private static final String PRODUCT_NAME = "productName";
 
-    private static HashMap<String,Product> mCartItems;
+    private static LinkedHashMap<String,Product> mCartItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +83,7 @@ public class Home extends ActionBarActivity {
             performSearch(getIntent());
         setupCartButton();
 
-        mCartItems = new HashMap<>();
+        mCartItems = new LinkedHashMap<>();
     }
 
     private void setupCartButton() {
@@ -101,7 +102,7 @@ public class Home extends ActionBarActivity {
                     mCartItems.put(mQuery,mProduct);
                 }
                 else {
-                    mCartItems.remove(mQuery);
+                    mProduct = mCartItems.remove(mQuery);
                     mCart.setImageResource(R.drawable.addtocart);
                     message = R.string.removed_from_cart;
                 }
@@ -109,12 +110,14 @@ public class Home extends ActionBarActivity {
                     @Override
                     public void onClick(View view) {
                         if(mCartItems.containsKey(mQuery))
-                            mCartItems.remove(mQuery);
+                            mProduct = mCartItems.remove(mQuery);
                         else
                             mCartItems.put(mQuery, mProduct);
                         mCart.setImageResource(mCartItems.containsKey(mQuery)?R.drawable.added:R.drawable.addtocart);
                     }
                 }).show();
+
+                updateTotal();
 
                 if(Cart.getAdapter() != null)
                     Cart.getAdapter().notifyDataSetChanged();
@@ -123,6 +126,22 @@ public class Home extends ActionBarActivity {
 
         TextView price = (TextView) findViewById(R.id.original_price);
         price.setPaintFlags(price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+    }
+
+    void updateTotal() {
+        Product total;
+        String key = "total_value_in_cart";
+        if(mCartItems.containsKey(key)) {
+            total = mCartItems.get(key);
+            mCartItems.remove(key);
+        }
+        else
+            total = new Product("<b><u>TOTAL</b></u>", 0);
+
+        total.realPrice+= (mProduct.realPrice*(mCartItems.containsKey(mQuery)?1:-1));
+        total.realPrice = (total.realPrice*100.00)/100.0;
+        total.setPrice(total.realPrice);
+        mCartItems.put(key,total);
     }
 
     protected void onResume() {
@@ -138,7 +157,6 @@ public class Home extends ActionBarActivity {
             mSnackbar = Snackbar.make(layout, String.format(mContext.getString(R.string.loading), mQuery), Snackbar.LENGTH_INDEFINITE);
             mSnackbar.show();
 
-            noResult.setVisibility(View.VISIBLE);
             results.setAlpha(0.2f);
             sView.onActionViewCollapsed();
             search(mQuery);

@@ -17,6 +17,13 @@ public class Product {
     public Spanned brandName, productId, originalPrice, styleId, colorId, price, percentOff, productUrl, productName;
     public int discount;
     public Drawable image;
+    double realPrice;
+
+    Product(String productName, double price) {
+        this.productName = Html.fromHtml(productName);
+        this.realPrice = price;
+        setPrice(realPrice);
+    }
 
     Product(String brandName, Bitmap image, String productId, String originalPrice, String styleId,
             String colorId, String price, String percentOff, String productUrl, String productName) {
@@ -27,10 +34,15 @@ public class Product {
         this.styleId = Html.fromHtml(styleId);
         this.colorId = Html.fromHtml(colorId);
         this.price = Html.fromHtml(price);
+        realPrice = Double.parseDouble(price.substring(price.indexOf("$")+1));
         this.percentOff = Html.fromHtml(percentOff+ " off");
         discount = Integer.parseInt(percentOff.substring(0, percentOff.indexOf('%')).trim());
         this.productUrl = Html.fromHtml(productUrl);
         this.productName = Html.fromHtml(productName);
+    }
+
+    public void setPrice(double price) {
+        this.price = Html.fromHtml("$"+Double.toString(price));
     }
 
     public void setImage(Drawable image) {
