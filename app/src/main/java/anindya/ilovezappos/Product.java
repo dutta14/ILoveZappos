@@ -34,7 +34,7 @@ public class Product {
         this.styleId = Html.fromHtml(styleId);
         this.colorId = Html.fromHtml(colorId);
         this.price = Html.fromHtml(price);
-        realPrice = Double.parseDouble(price.substring(price.indexOf("$")+1));
+        realPrice = Double.parseDouble(price.substring(price.indexOf("$")+1).replace(",",""));
         this.percentOff = Html.fromHtml(percentOff+ " off");
         discount = Integer.parseInt(percentOff.substring(0, percentOff.indexOf('%')).trim());
         this.productUrl = Html.fromHtml(productUrl);
