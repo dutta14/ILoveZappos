@@ -6,36 +6,47 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">#ffffff</item>
     </style>
 
     <style name="Screen" parent="@style/TextAppearance.AppCompat">
         <item name="android:background">@android:color/white</item>
     </style>
 
-    <style name="Brand" parent="@style/TextAppearance.AppCompat">
-        <item name="android:textSize">20sp</item>
+    <style name="General" parent="@style/TextAppearance.AppCompat">
+        <item name="android:fontFamily">serif</item>
+        <item name="android:textColor">@android:color/black</item>
     </style>
 
-    <style name="Product" parent="@style/TextAppearance.AppCompat">
+    <style name="Brand" parent="General">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Product" parent="General">
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@android:color/darker_gray</item>
     </style>
 
-    <style name="Price" parent="@style/TextAppearance.AppCompat">
+    <style name="Price" parent="General">
         <item name="android:textSize">25sp</item>
         <item name="android:textColor">@android:color/holo_orange_dark</item>
-    </style>
-
-    <style name="Info">
-        <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="Content">
+    <style name="Info" parent="General">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@android:color/holo_orange_dark</item>
+    </style>
+
+    <style name="Content" parent="General">
         <item name="android:textSize">18sp</item>
     </style>
 
-    <style name="Percent">
+    <style name="Percent" parent="General">
         <item name="android:textSize">15sp</item>
         <item name="android:textColor">#d3d3d3</item>
     </style>
@@ -50,7 +61,7 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="ContentHead" parent="Content">
-        <item name="android:textStyle">bold|italic</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 </resources>

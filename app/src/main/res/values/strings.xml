@@ -10,8 +10,8 @@
                         \n- Anindya</string>
     <string name="added_to_cart">Added to cart</string>
     <string name="more_info">More information</string>
-    <string name="color_id">Color ID:</string>
-    <string name="style_id">Style ID:</string>
+    <string name="color_id">Color:</string>
+    <string name="style_id">Style:</string>
     <string name="product_id">SKU:</string>
     <string name="product_url">URL:</string>
     <string name="no_match">No items match your query</string>
@@ -24,4 +24,6 @@
     <string name="cart_empty">Cart is empty</string>
     <string name="share">Share</string>
     <string name="cart">Cart</string>
+    <string name="less_info">Less information</string>
+    <string name="share_intro">Hey, check out this product on Anindya\'s Zappos!\n</string>
 </resources>

@@ -42,7 +42,11 @@ public class Product {
     }
 
     public void setPrice(double price) {
-        this.price = Html.fromHtml("$"+Double.toString(price));
+        double val = price;
+        val = val*100;
+        val = (double)((int) val);
+        val = val /100;
+        this.price = Html.fromHtml("$"+Double.toString(val));
     }
 
     public void setImage(Drawable image) {

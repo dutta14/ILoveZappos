@@ -37,17 +37,17 @@ import static android.view.View.*;
 public class Home extends ActionBarActivity {
 
     //Views for the activity.
-    private ActivityHomeBinding binding;
-    private FloatingActionButton mCart;
+    private ActivityHomeBinding binding; //used for databinding
+    private FloatingActionButton mCart; //cart button
     private CoordinatorLayout layout;
     private Context mContext;
-    private SearchView sView;
-    private TextView noResult;
-    private LinearLayout results;
+    private SearchView sView;  //search view
+    private TextView noResult; //view to display no matching results
+    private LinearLayout results; //view displaying results
     private Snackbar mSnackbar;
-    private String mQuery;
+    private String mQuery;  //user-inputted string
     private MenuItem share, cart;
-    private Product mProduct;
+    private Product mProduct; //current product being viewed.
 
     //public URI to share between friends.
     private final String URI = "http://anindya.ilovezappos/";
@@ -81,9 +81,33 @@ public class Home extends ActionBarActivity {
         Uri uri = getIntent().getData();
         if(uri!=null)
             performSearch(getIntent());
-        setupCartButton();
-
+        setupCartButton(); //set up floating action button.
         mCartItems = new LinkedHashMap<>();
+        setupMoreInfo(); //set up collapsible view.
+        TextView price = (TextView) findViewById(R.id.original_price);
+        price.setPaintFlags(price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG); //in case of discount, strike through original price.
+    }
+
+    private void setupMoreInfo() {
+        final TextView moreinfo = (TextView) findViewById(R.id.moreinfo);
+        moreinfo.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LinearLayout infobox = (LinearLayout)findViewById(R.id.infobox);
+                infobox.setVisibility(View.VISIBLE);
+                moreinfo.setVisibility(View.GONE);
+            }
+        });
+
+        final TextView lessinfo = (TextView) findViewById(R.id.lessinfo);
+        lessinfo.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LinearLayout infobox = (LinearLayout)findViewById(R.id.infobox);
+                infobox.setVisibility(View.GONE);
+                moreinfo.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void setupCartButton() {
@@ -95,14 +119,13 @@ public class Home extends ActionBarActivity {
                 Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shrink);
                 view.startAnimation(anim);
                 int message;
-
                 if(!mCartItems.containsKey(mQuery)) {
                     mCart.setImageResource(R.drawable.added);
                     message = R.string.added_to_cart;
-                    mCartItems.put(mQuery,mProduct);
+                    mCartItems.put(mQuery,mProduct); //add product to cart.
                 }
                 else {
-                    mProduct = mCartItems.remove(mQuery);
+                    mProduct = mCartItems.remove(mQuery); //remove product from cart.
                     mCart.setImageResource(R.drawable.addtocart);
                     message = R.string.removed_from_cart;
                 }
@@ -116,16 +139,11 @@ public class Home extends ActionBarActivity {
                         mCart.setImageResource(mCartItems.containsKey(mQuery)?R.drawable.added:R.drawable.addtocart);
                     }
                 }).show();
-
                 updateTotal();
-
                 if(Cart.getAdapter() != null)
-                    Cart.getAdapter().notifyDataSetChanged();
+                    Cart.getAdapter().notifyDataSetChanged(); //update cart activity.
             }
         });
-
-        TextView price = (TextView) findViewById(R.id.original_price);
-        price.setPaintFlags(price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
     }
 
     void updateTotal() {
@@ -138,10 +156,16 @@ public class Home extends ActionBarActivity {
         else
             total = new Product("<b><u>TOTAL</b></u>", 0);
 
-        total.realPrice+= (mProduct.realPrice*(mCartItems.containsKey(mQuery)?1:-1));
-        total.realPrice = (total.realPrice*100.00)/100.0;
+        if(mCartItems.containsKey(mQuery))
+            total.realPrice+= mProduct.realPrice;
+        else
+            total.realPrice-= mProduct.realPrice;
+        total.realPrice = (total.realPrice*100.00)/100.00;
         total.setPrice(total.realPrice);
         mCartItems.put(key,total);
+
+        if(mCartItems.size() == 1)
+            mCartItems.clear();
     }
 
     protected void onResume() {
@@ -229,30 +253,56 @@ public class Home extends ActionBarActivity {
         }
     }
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
+
+        final MenuItem searchItem = menu.findItem(R.id.search);
 
         SearchManager sMgr = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         sView = (SearchView) (menu.findItem(R.id.search)).getActionView();
         sView.setSearchableInfo(sMgr.getSearchableInfo(getComponentName()));
 
+        sView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setItemsVisibility(menu, searchItem, false);
+            }
+        });
+        sView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                setItemsVisibility(menu, searchItem, true);
+                return false;
+            }
+        });
+
         share = menu.findItem(R.id.menu_item_share);
         share.setVisible(false);
-
         cart = menu.findItem(R.id.cart);
         cart.setVisible(false);
         return true;
+    }
+
+    private void setItemsVisibility(Menu menu, MenuItem exception, boolean visible) {
+        for (int i=0; i<menu.size(); ++i) {
+            MenuItem item = menu.getItem(i);
+            if (item != exception) {
+                if((visible && noResult.getVisibility()==View.GONE) || (!visible))
+                item.setVisible(visible);
+            }
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_item_share:
+                String message = getString(R.string.share_intro);
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
                 sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Zappos");
-                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, URI + mQuery);
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, message + URI + mQuery);
                 startActivity(Intent.createChooser(sharingIntent, "Share via"));
                 return true;
             case R.id.search:

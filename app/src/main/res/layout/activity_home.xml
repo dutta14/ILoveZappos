@@ -46,15 +46,18 @@
                     android:visibility="gone">
 
                     <ImageView
-                        android:layout_width="300dp"
-                        android:layout_height="300dp"
+                        android:layout_width="250dp"
+                        android:layout_height="250dp"
                         android:layout_gravity="center"
+                        android:background="@drawable/image_border"
                         android:contentDescription="@string/product_image"
+                        android:padding="3dp"
                         android:src="@{product.image}" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="100dp"
+                        android:layout_marginTop="20dp"
                         android:orientation="horizontal">
 
                         <LinearLayout
@@ -75,6 +78,13 @@
                                 android:layout_height="wrap_content"
                                 android:text="@{product.productName}" />
                         </LinearLayout>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="5dp"
+                            android:background="@android:color/darker_gray"
+                            android:paddingBottom="5dp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -114,88 +124,115 @@
 
                     <LinearLayout
                         android:id="@+id/info"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="start"
+                        android:layout_marginTop="5dp"
                         android:orientation="vertical">
 
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@android:color/darker_gray"
+                            android:padding="4dp" />
+
                         <TextView
+                            android:id="@+id/moreinfo"
                             style="@style/Info"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
                             android:text="@string/more_info" />
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                            android:id="@+id/infobox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:animateLayoutChanges="true"
+                            android:orientation="vertical"
+                            android:visibility="gone">
 
-                            <TextView
-                                style="@style/ContentHead"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/product_id" />
-
-                            <TextView
-                                android:id="@+id/productId"
-                                style="@style/Content"
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="@{product.productId}" />
-                        </LinearLayout>
+                                android:orientation="horizontal">
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        style="@style/ContentHead"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/product_id" />
+
+                                    <TextView
+                                        style="@style/ContentHead"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/color_id" />
+
+                                    <TextView
+                                        style="@style/ContentHead"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/style_id" />
+
+                                    <TextView
+                                        style="@style/ContentHead"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/product_url" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="3"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/productId"
+                                        style="@style/Content"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="@{product.productId}" />
+
+                                    <TextView
+                                        android:id="@+id/colorId"
+                                        style="@style/Content"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="@{product.colorId}" />
+
+                                    <TextView
+                                        android:id="@+id/styleId"
+                                        style="@style/Content"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:text="@{product.styleId}" />
+
+                                    <TextView
+                                        android:id="@+id/productUrl"
+                                        style="@style/Content"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:autoLink="web"
+                                        android:text="@{product.productUrl}" />
+                                </LinearLayout>
+                            </LinearLayout>
 
                             <TextView
-                                style="@style/ContentHead"
+                                android:id="@+id/lessinfo"
+                                style="@style/Info"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/color_id" />
+                                android:layout_marginTop="10dp"
+                                android:text="@string/less_info" />
 
-                            <TextView
-                                android:id="@+id/colorId"
-                                style="@style/Content"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@{product.colorId}" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-
-                            <TextView
-                                style="@style/ContentHead"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/style_id" />
-
-                            <TextView
-                                android:id="@+id/styleId"
-                                style="@style/Content"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@{product.styleId}" />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-
-                            <TextView
-                                style="@style/ContentHead"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/product_url" />
-
-                            <TextView
-                                android:id="@+id/productUrl"
-                                style="@style/Content"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:autoLink="web"
-                                android:text="@{product.productUrl}" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
