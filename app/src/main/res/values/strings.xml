@@ -1,29 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ILoveZappos</string>
-    <string name="search_val">Search</string>
-    <string name="search_hint">Enter product name</string>
-    <string name="intro">Hello and welcome to my Zappos app. You can search for any item by clicking the option on the top right. Voice search is also available.\n
-                        \nYou can add your items to the cart and view them later, and there\'s an option to delete all items from your cart with a single click.\n
-                        \nYou can also share an item with your friends who have this app if you like it. Click on the share button and share the link generated.\n
-                        \nThank you and have fun!\n
-                        \n- Anindya</string>
-    <string name="added_to_cart">Added to cart</string>
-    <string name="more_info">More information</string>
-    <string name="color_id">Color:</string>
-    <string name="style_id">Style:</string>
-    <string name="product_id">SKU:</string>
-    <string name="product_url">URL:</string>
-    <string name="no_match">No items match your query</string>
-    <string name="product_image">Product image</string>
-    <string name="loading">Loading result for %1$s</string>
-    <string name="removed_from_cart">Removed from cart</string>
-    <string name="title_activity_cart">Cart</string>
-    <string name="action_settings">Settings</string>
-    <string name="items_deleted">All items deleted</string>
-    <string name="cart_empty">Cart is empty</string>
-    <string name="share">Share</string>
-    <string name="cart">Cart</string>
-    <string name="less_info">Less information</string>
-    <string name="share_intro">Hey, check out this product on Anindya\'s Zappos!\n</string>
+    <string name="app_name">I Love Zappos</string>
+    <string name="instruction">Enter keyword:</string>
+    <string name="clear">Clear</string>
+    <string name="search">Search</string>
+    <string name="url">http://api.zappos.com/</string>
+    <string name="api_key">b743e26728e16b81da139182bb2094357c31d331</string>
+    <string name="title_activity_details">Details</string>
 </resources>

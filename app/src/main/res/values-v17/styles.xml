@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <style name="Content" parent="General">
-        <item name="android:layout_marginStart">10dp</item>
-        <item name="android:textSize">18sp</item>
-    </style>
-</resources>

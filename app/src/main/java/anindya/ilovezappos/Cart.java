@@ -1,124 +1,42 @@
 package anindya.ilovezappos;
 
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
-public class Cart extends ActionBarActivity {
+import anindya.ilovezappos.model.Result;
 
-    private List<Product> productList = new ArrayList<>();
-    private RecyclerView recyclerView;
-    private static ProductAdapter mAdapter;
+/**
+ * Created by anind on 5/14/2017.
+ */
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cart);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+public class Cart {
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+    public static HashMap<String, Result> cart;
 
-                if(productList.size()>0) {
-                   final ArrayList<Product> temp = new ArrayList<>(productList);
-                    final HashMap<String, Product> m = new HashMap<>(Home.getMCartItems());
-
-
-                    Snackbar.make(view, R.string.items_deleted, Snackbar.LENGTH_LONG).setAction("Undo", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            productList.addAll(temp);
-                            Home.getMCartItems().putAll(m);
-                            mAdapter.notifyDataSetChanged();
-                        }
-                    }).show();
-                    Home.getMCartItems().clear();
-                    productList.clear();
-                    mAdapter.notifyDataSetChanged();
-                } else {
-                    Snackbar.make(view, R.string.cart_empty, Snackbar.LENGTH_LONG).show();
-                }
-            }
-        });
-
-
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-
-        mAdapter = new ProductAdapter(productList);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(mAdapter);
-        prepareData();
-        mAdapter.notifyDataSetChanged();
+    public static void init() {
+        cart = new HashMap<>();
     }
 
-    void prepareData() {
-        HashMap<String,Product> p = Home.getMCartItems();
-        for(String i: p.keySet()) {
-            productList.add(p.get(i));
+    public static boolean update(Result item) {
+        if(cart.containsKey(item.getProductId())) {
+            cart.remove(item.getProductId());
+            return false;
         }
+        cart.put(item.getProductId(), item);
+        return true;
     }
 
-
-    public static ProductAdapter getAdapter() {
-        return mAdapter;
+    public static boolean has(Result item) {
+        return cart.containsKey(item.getProductId());
     }
-}
 
-
-class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.MyViewHolder> {
-
-    private List<Product> productList;
-
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView itemName, price;
-
-        public MyViewHolder(View view) {
-            super(view);
-            itemName = (TextView) view.findViewById(R.id.item_name);
-            price = (TextView) view.findViewById(R.id.price);
+    public static Result[] getItems() {
+        ArrayList<Result> items = new ArrayList<>();
+        for(String key: cart.keySet()) {
+            items.add(cart.get(key));
         }
-    }
 
-    public ProductAdapter(List<Product> productList) {
-        this.productList = productList;
-    }
-
-    @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.cart_row, parent, false);
-
-        return new MyViewHolder(itemView);
-    }
-
-    @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        Product p = productList.get(position);
-        holder.itemName.setText(p.productName);
-        holder.price.setText(p.price);
-    }
-
-    @Override
-    public int getItemCount() {
-        return productList.size();
+        return items.toArray(new Result[items.size()]);
     }
 
 }
