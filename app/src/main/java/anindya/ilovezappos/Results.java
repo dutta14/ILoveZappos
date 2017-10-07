@@ -2,13 +2,12 @@ package anindya.ilovezappos;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -60,14 +59,11 @@ public class Results extends AppCompatActivity {
                 final MyAdapter adapter = new MyAdapter(mContext, array);
                 ListView listView = (ListView) findViewById(R.id.list);
                 listView.setAdapter(adapter);
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Result result = adapter.getItem(position);
-                        Intent intent = new Intent(mContext, Details.class);
-                        intent.putExtra("mResult", result);
-                        startActivity(intent);
-                    }
+                listView.setOnItemClickListener((parent, view, position, id) -> {
+                    Result result = adapter.getItem(position);
+                    Intent intent = new Intent(mContext, Details.class);
+                    intent.putExtra("mResult", result);
+                    startActivity(intent);
                 });
             }
 
@@ -76,12 +72,9 @@ public class Results extends AppCompatActivity {
         });
 
         FloatingActionButton cart = (FloatingActionButton) findViewById(R.id.cart);
-        cart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Results.this, ViewCart.class);
-                startActivity(intent);
-            }
+        cart.setOnClickListener(v -> {
+            Intent intent = new Intent(Results.this, ViewCart.class);
+            startActivity(intent);
         });
     }
 

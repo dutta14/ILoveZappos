@@ -5,7 +5,6 @@ import android.graphics.Paint;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,11 +31,6 @@ public class Details extends AppCompatActivity {
 
         final FloatingActionButton updateCart = (FloatingActionButton) findViewById(R.id.update_cart);
         updateCart.setImageResource(Cart.has(result)? R.drawable.remove_item: R.drawable.add_item);
-        updateCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                updateCart.setImageResource(Cart.update(result)? R.drawable.remove_item : R.drawable.add_item);
-            }
-        });
+        updateCart.setOnClickListener(v1 -> updateCart.setImageResource(Cart.update(result)? R.drawable.remove_item : R.drawable.add_item));
     }
 }
